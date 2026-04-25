@@ -108,14 +108,14 @@ function App() {
                 style={{ flex: 1, backgroundColor: reportType === 'lost' ? '#ffe0e0' : 'transparent', color: reportType === 'lost' ? '#d32f2f' : 'var(--text-color)', border: reportType === 'lost' ? 'none' : '1px solid #ccc' }}
                 onClick={(e) => { e.preventDefault(); setReportType('lost'); }}
               >
-                I Lost Something
+                I have lost an item
               </button>
               <button 
                 className="btn btn-secondary" 
                 style={{ flex: 1, backgroundColor: reportType === 'found' ? '#e0f7fa' : 'transparent', color: reportType === 'found' ? '#00838f' : 'var(--text-color)', border: reportType === 'found' ? 'none' : '1px solid #ccc' }}
                 onClick={(e) => { e.preventDefault(); setReportType('found'); }}
               >
-                I Found Something
+                I have found an item
               </button>
             </div>
             <form>
@@ -123,7 +123,7 @@ function App() {
               <input type="text" placeholder="E.g., Black iPhone 14" className="input-field" />
               
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Description</label>
-              <textarea placeholder="Provide a brief description..." className="input-field" style={{ minHeight: '100px', borderRadius: '15px' }}></textarea>
+              <textarea placeholder="Provide a brief description..." className="input-field" style={{ minHeight: '100px', borderRadius: '15px', resize: 'vertical', maxWidth: '100%' }}></textarea>
               
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Location</label>
               <input type="text" placeholder="Where was it lost/found?" className="input-field" />
