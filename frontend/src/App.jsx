@@ -92,7 +92,26 @@ function App() {
               <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px' }}>LOGIN</button>
             </form>
             <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '0.9rem' }}>
-              Don't have an account? <a href="#" style={{ color: 'var(--secondary-color)' }}>SignUp</a>
+              Don't have an account? <a href="#" onClick={(e) => { e.preventDefault(); setActiveTab('signup'); }} style={{ color: 'var(--secondary-color)' }}>SignUp</a>
+            </p>
+          </div>
+        </section>
+      )}
+
+      {activeTab === 'signup' && (
+        <section className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+          <div className="card" style={{ width: '100%', maxWidth: '400px', padding: '40px' }}>
+            <h2 style={{ textAlign: 'center', marginBottom: '10px' }}>CREATE ACCOUNT</h2>
+            <p style={{ textAlign: 'center', color: 'var(--text-light)', marginBottom: '30px' }}>Join the community today</p>
+            <form>
+              <input type="text" placeholder="Full Name" className="input-field" />
+              <input type="email" placeholder="Email" className="input-field" />
+              <input type="text" placeholder="Phone Number (Optional)" className="input-field" />
+              <input type="password" placeholder="Password" className="input-field" />
+              <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px' }}>SIGN UP</button>
+            </form>
+            <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '0.9rem' }}>
+              Already have an account? <a href="#" onClick={(e) => { e.preventDefault(); setActiveTab('login'); }} style={{ color: 'var(--secondary-color)' }}>Login</a>
             </p>
           </div>
         </section>
