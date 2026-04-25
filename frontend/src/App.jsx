@@ -20,6 +20,7 @@ function App() {
           <a href="#" onClick={() => setActiveTab('home')}>Home</a>
           <a href="#" onClick={() => setActiveTab('feed')}>Browse Items</a>
           <a href="#" onClick={() => setActiveTab('reportSelection')}>Report Item</a>
+          <a href="#" onClick={() => setActiveTab('activity')}>Activity</a>
           <a href="#" onClick={() => setActiveTab('login')}>Login</a>
         </nav>
       </header>
@@ -203,6 +204,44 @@ function App() {
               
               <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px', backgroundColor: '#00838f' }}>Submit Found Report</button>
             </form>
+          </div>
+        </section>
+      )}
+
+      {activeTab === 'activity' && (
+        <section className="container" style={{ padding: '40px 20px' }}>
+          <h2 style={{ fontSize: '2rem', marginBottom: '10px' }}>My Activity</h2>
+          <p style={{ color: 'var(--text-light)', marginBottom: '30px' }}>Track your lost/found reports and claims.</p>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="card" style={{ padding: '20px' }}>
+              <h3 style={{ marginBottom: '15px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>My Reports</h3>
+              <div style={{ padding: '10px 0', borderBottom: '1px solid #f5f5f5' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <strong style={{ color: '#d32f2f' }}>Lost: Blue iPhone 14</strong>
+                  <span style={{ fontSize: '0.8rem', backgroundColor: '#e0e0e0', padding: '2px 8px', borderRadius: '10px' }}>Open</span>
+                </div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-light)', marginTop: '5px' }}>Reported on Oct 24, 2023</p>
+              </div>
+              <div style={{ padding: '10px 0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <strong style={{ color: '#00838f' }}>Found: Keyring with Honda Key</strong>
+                  <span style={{ fontSize: '0.8rem', backgroundColor: '#c8e6c9', color: '#2e7d32', padding: '2px 8px', borderRadius: '10px' }}>Resolved</span>
+                </div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-light)', marginTop: '5px' }}>Reported on Oct 10, 2023</p>
+              </div>
+            </div>
+
+            <div className="card" style={{ padding: '20px' }}>
+              <h3 style={{ marginBottom: '15px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>My Claims</h3>
+              <div style={{ padding: '10px 0', borderBottom: '1px solid #f5f5f5' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <strong>Leather Wallet</strong>
+                  <span style={{ fontSize: '0.8rem', backgroundColor: '#fff9c4', color: '#f57f17', padding: '2px 8px', borderRadius: '10px' }}>Pending Approval</span>
+                </div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-light)', marginTop: '5px' }}>Claim submitted on Oct 25, 2023</p>
+              </div>
+            </div>
           </div>
         </section>
       )}
