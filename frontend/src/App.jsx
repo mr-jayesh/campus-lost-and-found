@@ -52,6 +52,7 @@ function App() {
         </a>
       </nav>
 
+      <main className="page-transition" key={activeTab}>
       {activeTab === 'home' && (
         <>
           <section className="hero">
@@ -351,7 +352,7 @@ function App() {
           </div>
         </section>
       )}
-
+      </main>
     </div>
   );
 }
