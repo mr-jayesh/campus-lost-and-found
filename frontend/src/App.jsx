@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './index.css';
+import SplineBackground from './SplineBackground';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <div className="App">
+      <SplineBackground />
       <header>
         <div className="logo" style={{ fontSize: '1.5rem', fontWeight: '800', fontFamily: 'Outfit' }}>
           Campus Lost & Found
