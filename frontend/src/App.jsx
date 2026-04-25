@@ -4,6 +4,7 @@ import './index.css';
 function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [reportType, setReportType] = useState('lost');
+  const [filter, setFilter] = useState('all');
 
   const mockItems = [
     { id: 1, type: 'lost', title: 'Blue iPhone 14', category: 'Electronics', location: 'Main Library', date: 'Oct 24, 2023', status: 'open' },
@@ -61,13 +62,20 @@ function App() {
 
       {activeTab === 'feed' && (
         <section className="container" style={{ padding: '40px 20px' }}>
-           <h2 style={{ marginBottom: '20px' }}>Browse Lost & Found</h2>
-           <div className="card" style={{ marginBottom: '20px', display: 'flex', gap: '15px' }}>
-              <input type="text" className="input-field" placeholder="Search items..." style={{ margin: 0 }} />
+           <h2 style={{ marginBottom: '20px' }}>Browse Items</h2>
+           <div className="card" style={{ marginBottom: '20px', display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+              <input type="text" className="input-field" placeholder="Search items..." style={{ margin: 0, flex: 1, minWidth: '200px' }} />
               <button className="btn btn-primary">Search</button>
            </div>
+           
+           <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+             <button className="btn btn-secondary" style={{ backgroundColor: filter === 'all' ? 'var(--primary-color)' : 'transparent', color: filter === 'all' ? 'white' : 'var(--text-color)', border: '1px solid #ccc' }} onClick={() => setFilter('all')}>All Items</button>
+             <button className="btn btn-secondary" style={{ backgroundColor: filter === 'lost' ? '#ffe0e0' : 'transparent', color: filter === 'lost' ? '#d32f2f' : 'var(--text-color)', border: '1px solid #ccc' }} onClick={() => setFilter('lost')}>Lost Items</button>
+             <button className="btn btn-secondary" style={{ backgroundColor: filter === 'found' ? '#e0f7fa' : 'transparent', color: filter === 'found' ? '#00838f' : 'var(--text-color)', border: '1px solid #ccc' }} onClick={() => setFilter('found')}>Found Items</button>
+           </div>
+
            <div className="items-grid">
-              {mockItems.map(item => (
+              {mockItems.filter(item => filter === 'all' || item.type === filter).map(item => (
                 <div key={item.id} className="card">
                   <span className={`badge ${item.type}`}>{item.type}</span>
                   <h3 style={{ margin: '15px 0 10px 0' }}>{item.title}</h3>
