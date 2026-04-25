@@ -6,6 +6,7 @@ function App() {
   const [reportType, setReportType] = useState('lost');
   const [filter, setFilter] = useState('all');
   const [selectedItem, setSelectedItem] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const mockItems = [
     { id: 1, type: 'lost', title: 'Blue iPhone 14', category: 'Electronics', location: 'Main Library', date: 'Oct 24, 2023', status: 'open', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=300&q=80' },
@@ -177,11 +178,11 @@ function App() {
           <h2 style={{ fontSize: '2.5rem', marginBottom: '10px' }}>LOST & FOUND</h2>
           <p style={{ color: 'var(--text-light)', marginBottom: '40px' }}>What do you need help with today?</p>
           <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <div className="card" style={{ width: '100%', maxWidth: '300px', padding: '40px 20px', cursor: 'pointer', backgroundColor: '#ffe0e0', color: '#d32f2f' }} onClick={() => setActiveTab('reportLost')}>
+            <div className="card" style={{ width: '100%', maxWidth: '300px', padding: '40px 20px', cursor: 'pointer', backgroundColor: '#ffe0e0', color: '#d32f2f' }} onClick={() => { setActiveTab('reportLost'); setIsSubmitted(false); }}>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '10px' }}>I Lost Something</h3>
               <p style={{ fontSize: '0.9rem', opacity: '0.8' }}>Report a lost item and let the community help you find it.</p>
             </div>
-            <div className="card" style={{ width: '100%', maxWidth: '300px', padding: '40px 20px', cursor: 'pointer', backgroundColor: '#e0f7fa', color: '#00838f' }} onClick={() => setActiveTab('reportFound')}>
+            <div className="card" style={{ width: '100%', maxWidth: '300px', padding: '40px 20px', cursor: 'pointer', backgroundColor: '#e0f7fa', color: '#00838f' }} onClick={() => { setActiveTab('reportFound'); setIsSubmitted(false); }}>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '10px' }}>I Found Something</h3>
               <p style={{ fontSize: '0.9rem', opacity: '0.8' }}>Help reunite a found item with its rightful owner.</p>
             </div>
@@ -196,24 +197,33 @@ function App() {
               <button onClick={() => setActiveTab('reportSelection')} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', marginRight: '10px' }}>←</button>
               <h2 style={{ margin: 0 }}>Report Lost Item</h2>
             </div>
-            <form>
+            
+            {isSubmitted ? (
+              <div className="success-box">
+                <h3 style={{ marginBottom: '10px' }}>✅ Report Submitted!</h3>
+                <p>Your lost item has been successfully reported. We'll notify you if someone finds it.</p>
+                <button className="btn btn-secondary" style={{ marginTop: '20px' }} onClick={() => setActiveTab('activity')}>View My Reports</button>
+              </div>
+            ) : (
+            <form onSubmit={(e) => { e.preventDefault(); setIsSubmitted(true); }}>
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Item Name</label>
-              <input type="text" placeholder="E.g., Black iPhone 14" className="input-field" />
+              <input type="text" placeholder="E.g., Black iPhone 14" className="input-field" required />
               
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Description</label>
-              <textarea placeholder="Provide a brief description..." className="input-field" style={{ minHeight: '100px', borderRadius: '15px', resize: 'vertical', maxWidth: '100%' }}></textarea>
+              <textarea placeholder="Provide a brief description..." className="input-field" style={{ minHeight: '100px', borderRadius: '15px', resize: 'vertical', maxWidth: '100%' }} required></textarea>
               
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Location</label>
-              <input type="text" placeholder="Where was it lost?" className="input-field" />
+              <input type="text" placeholder="Where was it lost?" className="input-field" required />
               
-              <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Upload Image</label>
-              <input type="file" className="input-field" accept="image/*" style={{ padding: '10px' }} />
+              <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Upload Image (Required)</label>
+              <input type="file" className="input-field" accept="image/*" style={{ padding: '10px' }} required />
               
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Reward (Optional)</label>
               <input type="text" placeholder="E.g., $50, Coffee, etc." className="input-field" />
               
-              <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px', backgroundColor: '#d32f2f' }}>Submit Lost Report</button>
+              <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '10px', backgroundColor: '#d32f2f' }}>Submit Lost Report</button>
             </form>
+            )}
           </div>
         </section>
       )}
@@ -225,21 +235,30 @@ function App() {
               <button onClick={() => setActiveTab('reportSelection')} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', marginRight: '10px' }}>←</button>
               <h2 style={{ margin: 0 }}>Report Found Item</h2>
             </div>
-            <form>
+            
+            {isSubmitted ? (
+              <div className="success-box">
+                <h3 style={{ marginBottom: '10px' }}>✅ Report Submitted!</h3>
+                <p>Thank you for reporting this found item. You're helping make the campus a better place!</p>
+                <button className="btn btn-secondary" style={{ marginTop: '20px' }} onClick={() => setActiveTab('activity')}>View My Reports</button>
+              </div>
+            ) : (
+            <form onSubmit={(e) => { e.preventDefault(); setIsSubmitted(true); }}>
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Item Name</label>
-              <input type="text" placeholder="E.g., Leather Wallet" className="input-field" />
+              <input type="text" placeholder="E.g., Leather Wallet" className="input-field" required />
               
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Description</label>
-              <textarea placeholder="Provide a brief description..." className="input-field" style={{ minHeight: '100px', borderRadius: '15px', resize: 'vertical', maxWidth: '100%' }}></textarea>
+              <textarea placeholder="Provide a brief description..." className="input-field" style={{ minHeight: '100px', borderRadius: '15px', resize: 'vertical', maxWidth: '100%' }} required></textarea>
               
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Location</label>
-              <input type="text" placeholder="Where did you find it?" className="input-field" />
+              <input type="text" placeholder="Where did you find it?" className="input-field" required />
               
-              <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Upload Image</label>
-              <input type="file" className="input-field" accept="image/*" style={{ padding: '10px' }} />
+              <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Upload Image (Required)</label>
+              <input type="file" className="input-field" accept="image/*" style={{ padding: '10px' }} required />
               
-              <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px', backgroundColor: '#00838f' }}>Submit Found Report</button>
+              <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '10px', backgroundColor: '#00838f' }}>Submit Found Report</button>
             </form>
+            )}
           </div>
         </section>
       )}
