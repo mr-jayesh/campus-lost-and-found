@@ -7,6 +7,8 @@ function App() {
   const [filter, setFilter] = useState('all');
   const [selectedItem, setSelectedItem] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [imageSearchFile, setImageSearchFile] = useState(null);
+  const [isAnalyzingImage, setIsAnalyzingImage] = useState(false);
 
   const mockItems = [
     { id: 1, type: 'lost', title: 'Blue iPhone 14', category: 'Electronics', location: 'Main Library', date: 'Oct 24, 2023', status: 'open', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=300&q=80' },
@@ -93,7 +95,18 @@ function App() {
            <h2 style={{ marginBottom: '20px' }}>Browse Items</h2>
            <div className="card" style={{ marginBottom: '20px' }}>
              <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', marginBottom: '15px' }}>
-                <input type="text" className="input-field" placeholder="What are you looking for?" style={{ margin: 0, flex: 2, minWidth: '200px' }} />
+                <div style={{ flex: 2, minWidth: '200px', display: 'flex', position: 'relative' }}>
+                  <input type="text" className="input-field" placeholder="What are you looking for?" style={{ margin: 0, width: '100%', paddingRight: '45px' }} />
+                  <input type="file" id="imageSearchInput" accept="image/*" style={{ display: 'none' }} onChange={(e) => {
+                    if(e.target.files && e.target.files[0]) {
+                      const fileUrl = URL.createObjectURL(e.target.files[0]);
+                      setIsAnalyzingImage(true);
+                      setImageSearchFile(fileUrl);
+                      setTimeout(() => setIsAnalyzingImage(false), 2000);
+                    }
+                  }} />
+                  <label htmlFor="imageSearchInput" style={{ position: 'absolute', right: '15px', top: '12px', fontSize: '1.3rem', cursor: 'pointer', opacity: 0.6 }} title="Search by Image">📷</label>
+                </div>
                 <button className="btn btn-primary" style={{ flex: '1', minWidth: '100px', padding: '14px 20px', borderRadius: '30px' }}>Search</button>
              </div>
              <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
@@ -112,6 +125,24 @@ function App() {
              </div>
            </div>
            
+           {isAnalyzingImage && (
+             <div className="card" style={{ marginBottom: '20px', textAlign: 'center', padding: '30px', border: '2px dashed var(--secondary-color)' }}>
+               <h3 style={{ marginBottom: '10px' }}>Analyzing Image... 🔍</h3>
+               <p style={{ color: 'var(--text-light)' }}>Running visual search against our database.</p>
+             </div>
+           )}
+
+           {imageSearchFile && !isAnalyzingImage && (
+             <div className="card" style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '20px', backgroundColor: 'rgba(232, 245, 233, 0.8)' }}>
+               <img src={imageSearchFile} alt="Search Query" style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px' }} />
+               <div style={{ flex: 1 }}>
+                 <h4 style={{ color: '#2e7d32', marginBottom: '5px' }}>Showing visually similar items</h4>
+                 <p style={{ fontSize: '0.9rem', color: 'var(--text-light)' }}>We found 2 items that look like your photo.</p>
+               </div>
+               <button className="btn btn-secondary" onClick={() => setImageSearchFile(null)}>Clear Search</button>
+             </div>
+           )}
+           
            <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
              <button className="btn btn-secondary" style={{ backgroundColor: filter === 'all' ? 'var(--primary-color)' : 'transparent', color: filter === 'all' ? 'white' : 'var(--text-color)', border: '1px solid #ccc' }} onClick={() => setFilter('all')}>All Items</button>
              <button className="btn btn-secondary" style={{ backgroundColor: filter === 'lost' ? '#ffe0e0' : 'transparent', color: filter === 'lost' ? '#d32f2f' : 'var(--text-color)', border: '1px solid #ccc' }} onClick={() => setFilter('lost')}>Lost Items</button>
@@ -119,7 +150,10 @@ function App() {
            </div>
 
            <div className="items-grid">
-              {mockItems.filter(item => filter === 'all' || item.type === filter).map(item => (
+              {mockItems
+                .filter(item => filter === 'all' || item.type === filter)
+                .filter((item, index) => (imageSearchFile && !isAnalyzingImage) ? index < 2 : true)
+                .map(item => (
                 <div key={item.id} className="card">
                   {item.image && <img src={item.image} alt={item.title} style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px' }} />}
                   <span className={`badge ${item.type}`}>{item.type}</span>
