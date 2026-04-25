@@ -3,6 +3,7 @@ import './index.css';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
+  const [reportType, setReportType] = useState('lost');
 
   const mockItems = [
     { id: 1, type: 'lost', title: 'Blue iPhone 14', category: 'Electronics', location: 'Main Library', date: 'Oct 24, 2023', status: 'open' },
@@ -102,8 +103,20 @@ function App() {
           <div className="card" style={{ padding: '30px' }}>
             <h2 style={{ marginBottom: '20px' }}>Report an Item</h2>
             <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-              <button className="btn btn-secondary" style={{ flex: 1, backgroundColor: '#ffe0e0', color: '#d32f2f' }}>I Lost Something</button>
-              <button className="btn btn-secondary" style={{ flex: 1, backgroundColor: '#e0f7fa', color: '#00838f' }}>I Found Something</button>
+              <button 
+                className="btn btn-secondary" 
+                style={{ flex: 1, backgroundColor: reportType === 'lost' ? '#ffe0e0' : 'transparent', color: reportType === 'lost' ? '#d32f2f' : 'var(--text-color)', border: reportType === 'lost' ? 'none' : '1px solid #ccc' }}
+                onClick={(e) => { e.preventDefault(); setReportType('lost'); }}
+              >
+                I Lost Something
+              </button>
+              <button 
+                className="btn btn-secondary" 
+                style={{ flex: 1, backgroundColor: reportType === 'found' ? '#e0f7fa' : 'transparent', color: reportType === 'found' ? '#00838f' : 'var(--text-color)', border: reportType === 'found' ? 'none' : '1px solid #ccc' }}
+                onClick={(e) => { e.preventDefault(); setReportType('found'); }}
+              >
+                I Found Something
+              </button>
             </div>
             <form>
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Item Name</label>
@@ -114,6 +127,13 @@ function App() {
               
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Location</label>
               <input type="text" placeholder="Where was it lost/found?" className="input-field" />
+              
+              {reportType === 'lost' && (
+                <>
+                  <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Reward (Optional)</label>
+                  <input type="text" placeholder="E.g., $50, Coffee, etc." className="input-field" />
+                </>
+              )}
               
               <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px' }}>Submit Report</button>
             </form>
