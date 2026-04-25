@@ -65,9 +65,25 @@ function App() {
       {activeTab === 'feed' && (
         <section className="container" style={{ padding: '40px 20px' }}>
            <h2 style={{ marginBottom: '20px' }}>Browse Items</h2>
-           <div className="card" style={{ marginBottom: '20px', display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-              <input type="text" className="input-field" placeholder="Search items..." style={{ margin: 0, flex: 1, minWidth: '200px' }} />
-              <button className="btn btn-primary">Search</button>
+           <div className="card" style={{ marginBottom: '20px' }}>
+             <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', marginBottom: '15px' }}>
+                <input type="text" className="input-field" placeholder="What are you looking for?" style={{ margin: 0, flex: 2, minWidth: '200px' }} />
+                <button className="btn btn-primary" style={{ flex: '1', minWidth: '100px', padding: '14px 20px', borderRadius: '30px' }}>Search</button>
+             </div>
+             <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+                <div style={{ flex: 1, minWidth: '150px' }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: '500', marginBottom: '5px', display: 'block', color: 'var(--text-light)' }}>Location</label>
+                  <input type="text" className="input-field" placeholder="e.g. Main Library" style={{ margin: 0, padding: '10px 15px' }} />
+                </div>
+                <div style={{ flex: 1, minWidth: '150px' }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: '500', marginBottom: '5px', display: 'block', color: 'var(--text-light)' }}>Date</label>
+                  <input type="date" className="input-field" style={{ margin: 0, padding: '10px 15px', fontFamily: 'inherit' }} />
+                </div>
+                <div style={{ flex: 1, minWidth: '150px' }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: '500', marginBottom: '5px', display: 'block', color: 'var(--text-light)' }}>Time</label>
+                  <input type="time" className="input-field" style={{ margin: 0, padding: '10px 15px', fontFamily: 'inherit' }} />
+                </div>
+             </div>
            </div>
            
            <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
