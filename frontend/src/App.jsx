@@ -91,6 +91,18 @@ function App() {
               <input type="password" placeholder="Password" className="input-field" />
               <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px' }}>LOGIN</button>
             </form>
+            <div style={{ textAlign: 'center', margin: '20px 0', position: 'relative' }}>
+              <hr style={{ border: 'none', borderTop: '1px solid #ccc' }} />
+              <span style={{ backgroundColor: 'white', padding: '0 10px', color: '#666', position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', fontSize: '0.9rem' }}>OR</span>
+            </div>
+            <button className="btn btn-secondary" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', border: '1px solid #ccc' }}>
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style={{ width: '20px', height: '20px' }} />
+              Continue with Google
+            </button>
+            <button className="btn btn-secondary" style={{ width: '100%', marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', border: '1px solid #ccc' }}>
+              <img src="https://www.svgrepo.com/show/512008/apple-173.svg" alt="Apple" style={{ width: '20px', height: '20px' }} />
+              Continue with Apple
+            </button>
             <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '0.9rem' }}>
               Don't have an account? <a href="#" onClick={(e) => { e.preventDefault(); setActiveTab('signup'); }} style={{ color: 'var(--secondary-color)' }}>SignUp</a>
             </p>
@@ -106,10 +118,22 @@ function App() {
             <form>
               <input type="text" placeholder="Full Name" className="input-field" />
               <input type="email" placeholder="Email" className="input-field" />
-              <input type="text" placeholder="Phone Number (Optional)" className="input-field" />
+              <input type="text" placeholder="Phone Number" className="input-field" />
               <input type="password" placeholder="Password" className="input-field" />
               <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px' }}>SIGN UP</button>
             </form>
+            <div style={{ textAlign: 'center', margin: '20px 0', position: 'relative' }}>
+              <hr style={{ border: 'none', borderTop: '1px solid #ccc' }} />
+              <span style={{ backgroundColor: 'white', padding: '0 10px', color: '#666', position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', fontSize: '0.9rem' }}>OR</span>
+            </div>
+            <button className="btn btn-secondary" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', border: '1px solid #ccc' }}>
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style={{ width: '20px', height: '20px' }} />
+              Sign up with Google
+            </button>
+            <button className="btn btn-secondary" style={{ width: '100%', marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', border: '1px solid #ccc' }}>
+              <img src="https://www.svgrepo.com/show/512008/apple-173.svg" alt="Apple" style={{ width: '20px', height: '20px' }} />
+              Sign up with Apple
+            </button>
             <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '0.9rem' }}>
               Already have an account? <a href="#" onClick={(e) => { e.preventDefault(); setActiveTab('login'); }} style={{ color: 'var(--secondary-color)' }}>Login</a>
             </p>
