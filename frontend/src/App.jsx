@@ -19,14 +19,38 @@ function App() {
         <div className="logo" style={{ fontSize: '1.5rem', fontWeight: '800', fontFamily: 'Outfit' }}>
           Campus Lost & Found
         </div>
-        <nav className="nav-links">
-          <a href="#" onClick={() => setActiveTab('home')}>Home</a>
-          <a href="#" onClick={() => setActiveTab('feed')}>Browse Items</a>
-          <a href="#" onClick={() => setActiveTab('reportSelection')}>Report Item</a>
-          <a href="#" onClick={() => setActiveTab('activity')}>Activity</a>
-          <a href="#" onClick={() => setActiveTab('login')}>Login</a>
+        <nav className="desktop-nav">
+          <a href="#" className={activeTab === 'home' ? 'active' : ''} onClick={() => setActiveTab('home')}>Home</a>
+          <a href="#" className={activeTab === 'feed' ? 'active' : ''} onClick={() => setActiveTab('feed')}>Browse</a>
+          <a href="#" className={activeTab === 'reportSelection' || activeTab === 'reportLost' || activeTab === 'reportFound' ? 'active' : ''} onClick={() => setActiveTab('reportSelection')}>Report</a>
+          <a href="#" className={activeTab === 'activity' ? 'active' : ''} onClick={() => setActiveTab('activity')}>Activity</a>
+          <a href="#" className={activeTab === 'login' || activeTab === 'signup' ? 'active' : ''} onClick={() => setActiveTab('login')}>Login</a>
         </nav>
       </header>
+
+      {/* Mobile Navigation Bottom Bar */}
+      <nav className="mobile-nav">
+        <a href="#" className={activeTab === 'home' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setActiveTab('home'); }}>
+          <span style={{ fontSize: '1.2rem', marginBottom: '2px' }}>🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="#" className={activeTab === 'feed' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setActiveTab('feed'); }}>
+          <span style={{ fontSize: '1.2rem', marginBottom: '2px' }}>🔍</span>
+          <span>Browse</span>
+        </a>
+        <a href="#" className={activeTab === 'reportSelection' || activeTab === 'reportLost' || activeTab === 'reportFound' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setActiveTab('reportSelection'); }}>
+          <span style={{ fontSize: '1.5rem', marginBottom: '0px', color: 'var(--secondary-color)' }}>➕</span>
+          <span>Report</span>
+        </a>
+        <a href="#" className={activeTab === 'activity' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setActiveTab('activity'); }}>
+          <span style={{ fontSize: '1.2rem', marginBottom: '2px' }}>📊</span>
+          <span>Activity</span>
+        </a>
+        <a href="#" className={activeTab === 'login' || activeTab === 'signup' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setActiveTab('login'); }}>
+          <span style={{ fontSize: '1.2rem', marginBottom: '2px' }}>👤</span>
+          <span>Login</span>
+        </a>
+      </nav>
 
       {activeTab === 'home' && (
         <>
