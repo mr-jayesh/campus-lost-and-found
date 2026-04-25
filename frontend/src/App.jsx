@@ -5,10 +5,11 @@ function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [reportType, setReportType] = useState('lost');
   const [filter, setFilter] = useState('all');
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const mockItems = [
-    { id: 1, type: 'lost', title: 'Blue iPhone 14', category: 'Electronics', location: 'Main Library', date: 'Oct 24, 2023', status: 'open' },
-    { id: 2, type: 'found', title: 'Leather Wallet', category: 'Accessories', location: 'Cafeteria', date: 'Oct 23, 2023', status: 'open' },
+    { id: 1, type: 'lost', title: 'Blue iPhone 14', category: 'Electronics', location: 'Main Library', date: 'Oct 24, 2023', status: 'open', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=300&q=80' },
+    { id: 2, type: 'found', title: 'Leather Wallet', category: 'Accessories', location: 'Cafeteria', date: 'Oct 23, 2023', status: 'open', image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=300&q=80' },
   ];
 
   return (
@@ -46,6 +47,7 @@ function App() {
             <div className="items-grid">
               {mockItems.map(item => (
                 <div key={item.id} className="card">
+                  {item.image && <img src={item.image} alt={item.title} style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px' }} />}
                   <span className={`badge ${item.type}`}>{item.type}</span>
                   <h3 style={{ margin: '15px 0 10px 0' }}>{item.title}</h3>
                   <p style={{ color: 'var(--text-light)', fontSize: '0.9rem', marginBottom: '15px' }}>
@@ -77,6 +79,7 @@ function App() {
            <div className="items-grid">
               {mockItems.filter(item => filter === 'all' || item.type === filter).map(item => (
                 <div key={item.id} className="card">
+                  {item.image && <img src={item.image} alt={item.title} style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px' }} />}
                   <span className={`badge ${item.type}`}>{item.type}</span>
                   <h3 style={{ margin: '15px 0 10px 0' }}>{item.title}</h3>
                   <p style={{ color: 'var(--text-light)', fontSize: '0.9rem', marginBottom: '15px' }}>
@@ -84,6 +87,9 @@ function App() {
                     📅 {item.date}
                   </p>
                   <button className="btn btn-primary" style={{ width: '100%' }}>View Details</button>
+                  {item.type === 'found' && (
+                    <button className="btn btn-secondary" style={{ width: '100%', marginTop: '10px', border: '1px solid #ccc' }} onClick={() => { setSelectedItem(item); setActiveTab('claimItem'); }}>Claim This Item</button>
+                  )}
                 </div>
               ))}
             </div>
@@ -184,6 +190,9 @@ function App() {
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Location</label>
               <input type="text" placeholder="Where was it lost?" className="input-field" />
               
+              <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Upload Image</label>
+              <input type="file" className="input-field" accept="image/*" style={{ padding: '10px' }} />
+              
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Reward (Optional)</label>
               <input type="text" placeholder="E.g., $50, Coffee, etc." className="input-field" />
               
@@ -209,6 +218,9 @@ function App() {
               
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Location</label>
               <input type="text" placeholder="Where did you find it?" className="input-field" />
+              
+              <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Upload Image</label>
+              <input type="file" className="input-field" accept="image/*" style={{ padding: '10px' }} />
               
               <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px', backgroundColor: '#00838f' }}>Submit Found Report</button>
             </form>
@@ -250,6 +262,33 @@ function App() {
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-light)', marginTop: '5px' }}>Claim submitted on Oct 25, 2023</p>
               </div>
             </div>
+          </div>
+        </section>
+      )}
+
+      {activeTab === 'claimItem' && selectedItem && (
+        <section className="container" style={{ padding: '40px 20px', maxWidth: '600px', margin: '0 auto' }}>
+          <div className="card" style={{ padding: '30px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+              <button onClick={() => setActiveTab('feed')} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', marginRight: '10px' }}>←</button>
+              <h2 style={{ margin: 0 }}>Claim "{selectedItem.title}"</h2>
+            </div>
+            
+            <div style={{ backgroundColor: '#fff9c4', padding: '15px', borderRadius: '10px', marginBottom: '20px', fontSize: '0.95rem' }}>
+              <strong style={{ color: '#f57f17' }}>⚠️ Verification Required</strong><br/>
+              To prevent theft, please provide details only the true owner would know.
+            </div>
+
+            <form>
+              <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Describe a Unique Identifier</label>
+              <textarea placeholder="E.g., Lock screen wallpaper, scratches, serial number, what's inside..." className="input-field" style={{ minHeight: '100px', borderRadius: '15px', resize: 'vertical', maxWidth: '100%' }}></textarea>
+              
+              <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Upload Proof of Ownership (Optional)</label>
+              <input type="file" className="input-field" accept="image/*" style={{ padding: '10px', marginBottom: '5px' }} />
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginTop: '0', marginBottom: '15px' }}>E.g., purchase receipt, original box, old photo of you with the item.</p>
+
+              <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px', backgroundColor: '#f57f17' }}>Submit Claim Request</button>
+            </form>
           </div>
         </section>
       )}
