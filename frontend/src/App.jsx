@@ -19,7 +19,7 @@ function App() {
         <nav className="nav-links">
           <a href="#" onClick={() => setActiveTab('home')}>Home</a>
           <a href="#" onClick={() => setActiveTab('feed')}>Browse Items</a>
-          <a href="#" onClick={() => setActiveTab('create')}>Report Item</a>
+          <a href="#" onClick={() => setActiveTab('reportSelection')}>Report Item</a>
           <a href="#" onClick={() => setActiveTab('login')}>Login</a>
         </nav>
       </header>
@@ -33,7 +33,7 @@ function App() {
                 Searched every corner of campus? Don't stress! Post, search, or report lost and found items in minutes. Reconnect with what matters.
               </p>
               <div className="hero-actions">
-                <button className="btn btn-secondary" onClick={() => setActiveTab('create')}>Report an Item</button>
+                <button className="btn btn-secondary" onClick={() => setActiveTab('reportSelection')}>Report an Item</button>
                 <button className="btn btn-primary" onClick={() => setActiveTab('feed')}>Browse Lost Items</button>
               </div>
             </div>
@@ -98,25 +98,29 @@ function App() {
         </section>
       )}
 
-      {activeTab === 'create' && (
+      {activeTab === 'reportSelection' && (
+        <section className="container" style={{ padding: '60px 20px', textAlign: 'center', minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <h2 style={{ fontSize: '2.5rem', marginBottom: '10px' }}>LOST & FOUND</h2>
+          <p style={{ color: 'var(--text-light)', marginBottom: '40px' }}>What do you need help with today?</p>
+          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <div className="card" style={{ width: '100%', maxWidth: '300px', padding: '40px 20px', cursor: 'pointer', backgroundColor: '#ffe0e0', color: '#d32f2f' }} onClick={() => setActiveTab('reportLost')}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '10px' }}>I Lost Something</h3>
+              <p style={{ fontSize: '0.9rem', opacity: '0.8' }}>Report a lost item and let the community help you find it.</p>
+            </div>
+            <div className="card" style={{ width: '100%', maxWidth: '300px', padding: '40px 20px', cursor: 'pointer', backgroundColor: '#e0f7fa', color: '#00838f' }} onClick={() => setActiveTab('reportFound')}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '10px' }}>I Found Something</h3>
+              <p style={{ fontSize: '0.9rem', opacity: '0.8' }}>Help reunite a found item with its rightful owner.</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {activeTab === 'reportLost' && (
         <section className="container" style={{ padding: '40px 20px', maxWidth: '600px', margin: '0 auto' }}>
           <div className="card" style={{ padding: '30px' }}>
-            <h2 style={{ marginBottom: '20px' }}>Report an Item</h2>
-            <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-              <button 
-                className="btn btn-secondary" 
-                style={{ flex: 1, backgroundColor: reportType === 'lost' ? '#ffe0e0' : 'transparent', color: reportType === 'lost' ? '#d32f2f' : 'var(--text-color)', border: reportType === 'lost' ? 'none' : '1px solid #ccc' }}
-                onClick={(e) => { e.preventDefault(); setReportType('lost'); }}
-              >
-                I have lost an item
-              </button>
-              <button 
-                className="btn btn-secondary" 
-                style={{ flex: 1, backgroundColor: reportType === 'found' ? '#e0f7fa' : 'transparent', color: reportType === 'found' ? '#00838f' : 'var(--text-color)', border: reportType === 'found' ? 'none' : '1px solid #ccc' }}
-                onClick={(e) => { e.preventDefault(); setReportType('found'); }}
-              >
-                I have found an item
-              </button>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+              <button onClick={() => setActiveTab('reportSelection')} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', marginRight: '10px' }}>←</button>
+              <h2 style={{ margin: 0 }}>Report Lost Item</h2>
             </div>
             <form>
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Item Name</label>
@@ -126,16 +130,35 @@ function App() {
               <textarea placeholder="Provide a brief description..." className="input-field" style={{ minHeight: '100px', borderRadius: '15px', resize: 'vertical', maxWidth: '100%' }}></textarea>
               
               <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Location</label>
-              <input type="text" placeholder="Where was it lost/found?" className="input-field" />
+              <input type="text" placeholder="Where was it lost?" className="input-field" />
               
-              {reportType === 'lost' && (
-                <>
-                  <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Reward (Optional)</label>
-                  <input type="text" placeholder="E.g., $50, Coffee, etc." className="input-field" />
-                </>
-              )}
+              <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Reward (Optional)</label>
+              <input type="text" placeholder="E.g., $50, Coffee, etc." className="input-field" />
               
-              <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px' }}>Submit Report</button>
+              <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px', backgroundColor: '#d32f2f' }}>Submit Lost Report</button>
+            </form>
+          </div>
+        </section>
+      )}
+
+      {activeTab === 'reportFound' && (
+        <section className="container" style={{ padding: '40px 20px', maxWidth: '600px', margin: '0 auto' }}>
+          <div className="card" style={{ padding: '30px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+              <button onClick={() => setActiveTab('reportSelection')} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', marginRight: '10px' }}>←</button>
+              <h2 style={{ margin: 0 }}>Report Found Item</h2>
+            </div>
+            <form>
+              <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Item Name</label>
+              <input type="text" placeholder="E.g., Leather Wallet" className="input-field" />
+              
+              <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Description</label>
+              <textarea placeholder="Provide a brief description..." className="input-field" style={{ minHeight: '100px', borderRadius: '15px', resize: 'vertical', maxWidth: '100%' }}></textarea>
+              
+              <label style={{ fontWeight: '500', marginBottom: '5px', display: 'block' }}>Location</label>
+              <input type="text" placeholder="Where did you find it?" className="input-field" />
+              
+              <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px', backgroundColor: '#00838f' }}>Submit Found Report</button>
             </form>
           </div>
         </section>
